@@ -40,9 +40,10 @@ module NlMenuManager
       if project_modules.key?(name) && !project_modules[name][:visible].nil?
         next project_modules[name][:visible]
       end
-      # Global visible
+      # Global visible — handle boolean false, string 'false', or nil
       if global_cfg.key?(name)
-        next global_cfg[name]['visible'] != false
+        v = global_cfg[name]['visible']
+        next !(v == false || v == 'false' || v.to_s == '0')
       end
       true  # not configured — show by default
     end
@@ -93,6 +94,30 @@ module NlMenuManager
     else
       caption.to_s
     end
+  end
+
+  # Normalizes raw plugin settings params before save.
+  # HTML checkboxes send nothing when unchecked — we must explicitly
+  # write visible: false for any item whose visible key is absent.
+  def self.normalize_settings(raw)
+    result = {}
+    MANAGED_MENUS.each do |menu_key|
+      result[menu_key] = {}
+      next unless raw[menu_key].is_a?(Hash)
+
+      # Get the full live item list so we know ALL possible names
+      live_names = Redmine::MenuManager.items(menu_key.to_sym)
+                     .root.children.map { |i| i.name.to_s } rescue []
+
+      live_names.each do |name|
+        cfg = raw[menu_key][name] || {}
+        result[menu_key][name] = {
+          'position' => cfg['position'].to_i,
+          'visible'  => cfg['visible'].to_s == '1'
+        }
+      end
+    end
+    result
   end
 
   # Builds a settings hash from form params.

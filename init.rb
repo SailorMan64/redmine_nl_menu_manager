@@ -22,4 +22,10 @@ Redmine::Plugin.register :redmine_nl_menu_manager do
   }, partial: 'settings/nl_menu_manager/settings'
 end
 
+# Explicitly require lib files before after_init runs the prepend
+require_relative 'lib/redmine_nl_menu_manager'
+require_relative 'lib/redmine_nl_menu_manager/patches/menu_manager_patch'
+require_relative 'lib/redmine_nl_menu_manager/patches/settings_controller_patch'
+require_relative 'lib/redmine_nl_menu_manager/hooks'
+
 require_relative 'after_init'

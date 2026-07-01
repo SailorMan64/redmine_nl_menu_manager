@@ -1,29 +1,30 @@
 # Next Level™ Menu Manager — MenuManagerPatch
-# Patches Redmine::MenuManager::MenuHelper#menu_items_for to apply
-# global and per-project menu ordering and visibility.
-#
-# Priority:
-#   1. Per-project enabled_modules.position / enabled_modules.visible
-#   2. Global plugin settings (project_menu / application_menu / top_menu)
-#   3. Registration order (fallback for items not in any saved config)
+# Uses Module#prepend (Ruby 2.0+) to override menu_items_for cleanly.
+# prepend puts this module BEFORE MenuHelper in the method lookup chain,
+# so our method runs first and calls super to get the original behavior
+# for anything we don't handle.
 
 module RedmineNlMenuManager
   module Patches
     module MenuManagerPatch
-      def self.included(base)
-        base.alias_method :menu_items_for_without_nl, :menu_items_for
-        base.alias_method :menu_items_for, :menu_items_for_with_nl
-      end
 
-      def menu_items_for_with_nl(menu, project = nil)
+      def menu_items_for(menu, project = nil)
+        # Load global config for this menu
+        setting_key = menu.to_s
+        global_cfg  = NlMenuManager.global_config(setting_key)
+
+        # If no config saved yet, fall through to original behavior
+        if global_cfg.empty?
+          return super
+        end
+
         items = []
         menu_children = Redmine::MenuManager.items(menu).root.children
 
-        setting_key = menu.to_s  # 'project_menu', 'application_menu', 'top_menu'
-        global_cfg  = NlMenuManager.global_config(setting_key)
-
-        # Sort and filter
-        menu_children = NlMenuManager.sort_and_filter(menu_children, global_cfg, menu, project)
+        # Apply sort and visibility filter
+        menu_children = NlMenuManager.sort_and_filter(
+          menu_children, global_cfg, menu, project
+        )
 
         menu_children.each do |node|
           if node.allowed?(User.current, project)
@@ -37,6 +38,7 @@ module RedmineNlMenuManager
 
         return block_given? ? nil : items
       end
+
     end
   end
 end
