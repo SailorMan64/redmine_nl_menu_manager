@@ -1,43 +1,95 @@
-/* Next Level™ Menu Manager — Styles */
+/* Next Level™ Menu Manager — Styles
+   Plugin settings page is wrapped by Redmine in: div.box.tabular.settings
+   The .admin .box rule in Boostmine gives us: dark blue bg, white text, 24px padding.
+   We inherit that and layer our layout on top.
+*/
 
-.nl-menu-manager-settings {
-  margin-top: 1em;
-}
-
+/* ── Intro bar ───────────────────────────────────────────────────── */
 .nl-menu-manager-intro {
-  margin-bottom: 1.2em;
-  color: #444;
+  margin: 0 0 1.2em 0;
+  padding: 0;
+  color: #ffffff;
+  font-size: 0.95em;
 }
 
+/* ── Three-column layout ─────────────────────────────────────────── */
+.nl-menu-columns {
+  display: flex;
+  gap: 0;
+  align-items: flex-start;
+}
+
+.nl-menu-column {
+  flex: 1;
+  min-width: 0;
+  padding: 0 25px;
+}
+
+.nl-menu-column:first-child { padding-left: 0; }
+.nl-menu-column:last-child  { padding-right: 0; }
+
+/* Divider between columns */
+.nl-menu-column + .nl-menu-column {
+  border-left: 1px solid rgba(255,255,255,0.15);
+}
+
+/* ── Fieldset ────────────────────────────────────────────────────── */
 .nl-menu-fieldset {
-  margin-bottom: 1.5em;
+  margin-bottom: 0;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
 
+.nl-menu-fieldset legend {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1em;
+  margin-bottom: 0.3em;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.nl-menu-sub {
+  font-size: 0.82em;
+  color: rgba(255,255,255,0.55);
+  margin: 0 0 0.7em 0;
+}
+
+/* ── Sortable list ───────────────────────────────────────────────── */
 .nl-menu-sortable {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+/* Override .tabular p padding on any p inside our widget */
+.nl-menu-manager-settings p,
+.nl-menu-manager-settings .nl-menu-sub {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
 .nl-menu-item {
   display: flex;
   align-items: center;
-  padding: 5px 8px;
-  margin: 3px 0;
-  background: #f8f9fa;
-  border: 1px solid #e0e4e8;
+  padding: 4px 8px;
+  margin: 2px 0;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: 4px;
-  cursor: default;
-  gap: 10px;
+  gap: 8px;
 }
 
 .nl-menu-item:hover {
-  background: #eef2f7;
+  background: rgba(255,255,255,0.13);
 }
 
 .nl-drag-handle {
   cursor: grab;
-  color: #999;
+  color: rgba(255,255,255,0.4);
   flex-shrink: 0;
 }
 
@@ -48,28 +100,52 @@
 .nl-menu-label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex: 1;
   font-weight: normal;
+  font-size: 0.88em;
+  color: #ffffff;
   margin: 0;
   cursor: default;
 }
 
 .nl-menu-key {
-  color: #aaa;
-  font-size: 0.85em;
+  color: rgba(255,255,255,0.35);
+  font-size: 0.78em;
   font-family: monospace;
 }
 
+/* Drag placeholder */
 .nl-menu-placeholder {
-  height: 34px;
-  background: #dde8f5;
-  border: 2px dashed #7baed6;
+  height: 30px;
+  background: rgba(255,255,255,0.05);
+  border: 2px dashed rgba(255,255,255,0.3);
   border-radius: 4px;
-  margin: 3px 0;
+  margin: 2px 0;
 }
 
-/* Disabled/hidden items get a muted look */
+/* Unchecked/hidden items — muted */
 .nl-menu-item:has(input[type=checkbox]:not(:checked)) {
-  opacity: 0.5;
+  opacity: 0.4;
+}
+
+/* Checkbox styling in dark context */
+.nl-menu-item input[type=checkbox] {
+  flex-shrink: 0;
+  accent-color: #5b9bd5;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .nl-menu-columns {
+    flex-direction: column;
+  }
+  .nl-menu-column {
+    padding: 0 0 1.5em 0;
+    border-left: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  .nl-menu-column:last-child {
+    border-bottom: none;
+  }
 }
