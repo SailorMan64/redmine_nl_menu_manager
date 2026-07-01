@@ -1,0 +1,75 @@
+/* Next Level™ Menu Manager — Styles */
+
+.nl-menu-manager-settings {
+  margin-top: 1em;
+}
+
+.nl-menu-manager-intro {
+  margin-bottom: 1.2em;
+  color: #444;
+}
+
+.nl-menu-fieldset {
+  margin-bottom: 1.5em;
+}
+
+.nl-menu-sortable {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nl-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 5px 8px;
+  margin: 3px 0;
+  background: #f8f9fa;
+  border: 1px solid #e0e4e8;
+  border-radius: 4px;
+  cursor: default;
+  gap: 10px;
+}
+
+.nl-menu-item:hover {
+  background: #eef2f7;
+}
+
+.nl-drag-handle {
+  cursor: grab;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.nl-drag-handle:active {
+  cursor: grabbing;
+}
+
+.nl-menu-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  font-weight: normal;
+  margin: 0;
+  cursor: default;
+}
+
+.nl-menu-key {
+  color: #aaa;
+  font-size: 0.85em;
+  font-family: monospace;
+}
+
+.nl-menu-placeholder {
+  height: 34px;
+  background: #dde8f5;
+  border: 2px dashed #7baed6;
+  border-radius: 4px;
+  margin: 3px 0;
+}
+
+/* Disabled/hidden items get a muted look */
+.nl-menu-item:has(input[type=checkbox]:not(:checked)) {
+  opacity: 0.5;
+}

@@ -1,0 +1,44 @@
+<%
+  # Next Level™ Menu Manager — Global Settings UI
+  # Rendered at Administration > Plugins > Next Level Menu Manager > Settings
+  menus = [
+    { key: 'project_menu',     label: 'Project App Menu (per-strategy tabs)' },
+    { key: 'application_menu', label: 'Application Menu (global top bar icons)' },
+    { key: 'top_menu',         label: 'Top Menu (Home, Projects, My Page…)' }
+  ]
+%>
+
+<div class="nl-menu-manager-settings">
+  <p class="nl-menu-manager-intro">
+    <strong>Next Level™ Menu Manager</strong> — Drag items to reorder. Toggle the checkbox to show or hide each item.
+    Changes take effect immediately after saving. Per-strategy overrides are available in each strategy's Settings &gt; Modules tab.
+  </p>
+
+  <% menus.each do |menu| %>
+    <% items = NlMenuManager.menu_items_for_ui(menu[:key]) %>
+    <fieldset class="box nl-menu-fieldset">
+      <legend><%= menu[:label] %></legend>
+      <ul class="nl-menu-sortable" id="nl-sortable-<%= menu[:key] %>">
+        <% items.each do |item| %>
+          <li class="nl-menu-item" data-name="<%= item[:name] %>">
+            <span class="icon-only icon-sort-handle sort-handle nl-drag-handle" title="Drag to reorder">
+              <%= sprite_icon('reorder', '') %>
+            </span>
+            <label class="nl-menu-label">
+              <input type="checkbox"
+                     name="settings[<%= menu[:key] %>][<%= item[:name] %>][visible]"
+                     value="1"
+                     <%= 'checked' if item[:visible] %> />
+              <%= item[:label] %>
+              <span class="nl-menu-key">(<%= item[:name] %>)</span>
+            </label>
+            <input type="hidden"
+                   name="settings[<%= menu[:key] %>][<%= item[:name] %>][position]"
+                   value="<%= item[:position] %>"
+                   class="nl-position-input" />
+          </li>
+        <% end %>
+      </ul>
+    </fieldset>
+  <% end %>
+</div>

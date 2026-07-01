@@ -1,0 +1,10 @@
+en:
+  # Next Level™ Menu Manager
+  label_nl_menu_manager:              "Next Level™ Menu Manager"
+  label_nl_menu_project_menu:         "Project App Menu"
+  label_nl_menu_application_menu:     "Application Menu"
+  label_nl_menu_top_menu:             "Top Menu"
+  label_nl_menu_order_visibility:     "Menu Order & Visibility"
+  label_nl_menu_strategy_override:    "Strategy Menu Order & Visibility"
+  label_nl_menu_drag_hint:            "Drag to reorder. Uncheck to hide."
+  button_nl_menu_save_strategy_order: "Save Strategy Menu Order"

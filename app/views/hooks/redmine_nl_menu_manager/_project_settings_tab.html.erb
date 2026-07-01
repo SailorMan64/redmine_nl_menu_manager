@@ -1,0 +1,54 @@
+<%
+  # Per-project menu order — injected into project Settings > Modules tab
+  # Only shows if the migration has run (enabled_modules has position column)
+  return unless EnabledModule.column_names.include?('position')
+  project = context[:project]
+  return unless project.is_a?(Project)
+
+  global_cfg = NlMenuManager.global_config('project_menu')
+  enabled_mods = project.enabled_modules.map(&:name)
+
+  # Build list: only modules enabled for this project, in current effective order
+  items = Redmine::MenuManager.items(:project_menu).root.children.select do |item|
+    enabled_mods.include?(item.name.to_s)
+  end
+
+  items = NlMenuManager.sort_and_filter(items, global_cfg, :project_menu, project)
+%>
+
+<% if items.any? %>
+<fieldset class="box" style="margin-top: 1.5em;">
+  <legend><strong>Next Level™ Menu Manager</strong> — Strategy Menu Order &amp; Visibility</legend>
+  <p style="color: #666; font-size: 0.9em;">
+    Drag to reorder. Uncheck to hide from this strategy's menu.
+    Leave as-is to inherit the global default order.
+  </p>
+
+  <%= form_tag(nl_menu_manager_project_order_path(project), method: :post, id: 'nl-project-menu-form') do %>
+    <ul class="nl-menu-sortable" id="nl-project-sortable">
+      <% items.each_with_index do |item, i| %>
+        <%
+          em      = project.enabled_modules.find { |e| e.name == item.name.to_s }
+          visible = em.respond_to?(:visible) ? em.visible : true
+        %>
+        <li class="nl-menu-item" data-name="<%= item.name %>">
+          <span class="icon-only icon-sort-handle sort-handle nl-drag-handle" title="Drag to reorder">
+            <%= sprite_icon('reorder', '') %>
+          </span>
+          <label class="nl-menu-label">
+            <input type="checkbox"
+                   name="nl_menu_items[<%= i %>][visible]"
+                   value="1"
+                   <%= 'checked' if visible %> />
+            <%= NlMenuManager.item_label(item) %>
+            <span class="nl-menu-key">(<%= item.name %>)</span>
+          </label>
+          <input type="hidden" name="nl_menu_items[<%= i %>][name]"    value="<%= item.name %>" />
+          <input type="hidden" name="nl_menu_items[<%= i %>][position]" value="<%= i + 1 %>" class="nl-position-input" />
+        </li>
+      <% end %>
+    </ul>
+    <p><%= submit_tag 'Save Strategy Menu Order', name: nil %></p>
+  <% end %>
+</fieldset>
+<% end %>
