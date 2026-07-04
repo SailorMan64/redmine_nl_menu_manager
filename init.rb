@@ -2,7 +2,7 @@ require 'redmine'
 
 REDMINE_NL_MENU_MANAGER_VERSION = '1.0.0'
 
-Redmine::Plugin.register :redmine_nl_menu_manager do
+Redmine::Plugin.register :next_level_redmine_menu_manager do
   name        "Next Level™ Menu Manager v#{REDMINE_NL_MENU_MANAGER_VERSION}"
   author      'Manuel Palachuk — Next Level Strategy'
   description 'Global and per-project control over Redmine menu order and ' \

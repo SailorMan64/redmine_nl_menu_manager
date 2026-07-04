@@ -11,7 +11,7 @@ module NlMenuManager
   # Returns the global config hash for a given menu key.
   # Format: { 'overview' => { 'position' => 1, 'visible' => true }, ... }
   def self.global_config(menu_key)
-    cfg = Setting.plugin_redmine_nl_menu_manager[menu_key]
+    cfg = Setting.plugin_next_level_redmine_menu_manager[menu_key]
     cfg.is_a?(Hash) ? cfg : {}
   end
 

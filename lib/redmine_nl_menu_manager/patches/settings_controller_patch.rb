@@ -8,7 +8,7 @@ module RedmineNlMenuManager
     module SettingsControllerPatch
       module InstanceMethods
         def plugin
-          if params[:id] == 'redmine_nl_menu_manager' && request.post?
+          if params[:id] == 'next_level_redmine_menu_manager' && request.post?
             raw = params[:settings] ? params[:settings].permit!.to_h : {}
             params[:settings] = ActionController::Parameters.new(
               NlMenuManager.normalize_settings(raw)
