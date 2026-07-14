@@ -21,6 +21,14 @@ Redmine::Plugin.register :next_level_redmine_menu_manager do
     'top_menu'         => {},
     'account_menu'     => {}
   }, partial: 'settings/nl_menu_manager/settings'
+
+  # Admin page entry with its own icon (MPI #7134) -- 'reorder' from Redmine 6's
+  # core SVG icon set, matching what the plugin does (drag-and-drop menu
+  # reordering). Same registration pattern as redmine_people's admin entry.
+  menu :admin_menu, :nl_menu_manager,
+       {controller: 'settings', action: 'plugin', id: 'next_level_redmine_menu_manager'},
+       caption: 'Menu Manager', html: {class: 'icon'}, icon: 'reorder',
+       plugin: :next_level_redmine_menu_manager
 end
 
 # Explicitly require lib files before after_init runs the prepend
