@@ -2,7 +2,8 @@
   menus = [
     { key: 'project_menu',     label: 'Project App Menu',   sub: 'Per-strategy horizontal tab bar' },
     { key: 'application_menu', label: 'Application Menu',   sub: 'Global bar above the project tabs' },
-    { key: 'top_menu',         label: 'Top Menu',           sub: 'Home, Projects, My Page…' }
+    { key: 'top_menu',         label: 'Top Menu',           sub: 'Home, Projects, My Page…' },
+    { key: 'account_menu',     label: 'Account Menu',       sub: 'Next to the logged-in user badge (My account, Sign out, Help…)' }
   ]
 %>
 
@@ -29,9 +30,7 @@
                   <input type="checkbox"
                          name="settings[<%= menu[:key] %>][<%= item[:name] %>][visible]"
                          value="1"
-                         <%= 'checked' if item[:visible] %> />
-                  <%= item[:label] %>
-                  <span class="nl-menu-key">(<%= item[:name] %>)</span>
+                         <%= 'checked' if item[:visible] %> /><span class="nl-menu-text"><%= item[:label] %></span><span class="nl-menu-key">(<%= item[:name] %>)</span>
                 </label>
                 <input type="hidden"
                        name="settings[<%= menu[:key] %>][<%= item[:name] %>][position]"

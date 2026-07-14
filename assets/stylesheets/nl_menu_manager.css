@@ -102,11 +102,21 @@
   align-items: center;
   gap: 6px;
   flex: 1;
+  min-width: 0;
   font-weight: normal;
   font-size: 0.88em;
   color: #ffffff;
   margin: 0;
   cursor: default;
+}
+
+/* Manny, 2026-07-13 -- with 4 columns (Account Menu added), equal-width
+   flex columns became narrow enough that multi-word labels like
+   "My account" / "Spent time" wrapped inside .nl-menu-fieldset.
+   Force the label text onto one line; the item row can scroll/overflow
+   the column horizontally rather than wrap. See MPI #505. */
+.nl-menu-text {
+  white-space: nowrap;
 }
 
 .nl-menu-key {

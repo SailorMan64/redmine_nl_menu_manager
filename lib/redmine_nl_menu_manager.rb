@@ -6,7 +6,7 @@ module RedmineNlMenuManager
 end
 
 module NlMenuManager
-  MANAGED_MENUS = %w[project_menu application_menu top_menu].freeze
+  MANAGED_MENUS = %w[project_menu application_menu top_menu account_menu].freeze
 
   # Returns the global config hash for a given menu key.
   # Format: { 'overview' => { 'position' => 1, 'visible' => true }, ... }

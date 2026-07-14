@@ -18,7 +18,8 @@ Redmine::Plugin.register :next_level_redmine_menu_manager do
   settings default: {
     'project_menu'     => {},
     'application_menu' => {},
-    'top_menu'         => {}
+    'top_menu'         => {},
+    'account_menu'     => {}
   }, partial: 'settings/nl_menu_manager/settings'
 end
 
